@@ -1,13 +1,14 @@
-from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QDialog
 import sqlite3
 import sys
+from addEditCoffeeForm import Ui_Dialog
+from main_window import Ui_MainWindow
 
 
-class AddEditCoffeeForm(QDialog):
+class AddEditCoffeeForm(QDialog, Ui_Dialog):
     def __init__(self, parent, status):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.status = status
         self.parent = parent
         self.to_need_visible()
@@ -80,11 +81,11 @@ class AddEditCoffeeForm(QDialog):
         self.parent.show_table()
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        self.con = sqlite3.connect('coffee.sqlite')
+        self.setupUi(self)
+        self.con = sqlite3.connect('release/data/coffee.sqlite')
         self.show_table()
         self.pushButton.clicked.connect(self.add_row)
         self.pushButton_2.clicked.connect(self.edit_row)
